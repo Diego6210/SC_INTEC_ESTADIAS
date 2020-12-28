@@ -33,7 +33,17 @@
                     <div class="card-block">
                         <!--FORM BODY-->
                         <div class="form-body">  
-
+                        <ul class="list-inline text-xs-center">
+                            <li class="mr-1">
+                                <h6><i class="icon-circle" style="color: #99CCCC !important;"></i> <span>Orden creada</span></h6>
+                            </li>
+                            <li class="mr-1">
+                                <h6><i class="icon-circle indigo"></i> <span>Paquete</span></h6>
+                            </li>
+                            <li class="mr-1">
+                                <h6><i class="icon-circle indo"></i> <span>Equipo</span></h6>
+                            </li>
+                        </ul>
 
                         <div class="monthly" id="mycalendar"></div>
 
@@ -67,6 +77,33 @@
 	};
 
 	$(window).load( function() {
+
+       /* $.ajax
+        ({
+            type:'post',
+            url:'<?php echo site_url();?>/Calendario_Controller/ConsultarTodosPaquetes',
+            success:function(resp)
+            {
+                
+
+
+                select IdOrden, Fecha, FechaEnvio,FechaRecibo,Observaciones from orden_servicio where IdOrden = 1;
+
+
+select * from equipo_orden where IdEquipoOrden = 1; 
+
+
+select * from paquete_envio where IdPaqueteEnvio = 1;
+
+
+
+
+                console.log(resp);
+                alert('Descripción: ' + resp['Descripcion']+ ' - Numero de guia: ' + resp['NumeroGuia'] + ' - Laboratorio ' + resp[0]['Descripcion_lab']);
+            }
+        });*/
+
+
 		$('#mycalendar').monthly({
 			mode: 'event',
 			dataType: 'json',

@@ -18,7 +18,7 @@ class Calendario_Controller extends CI_Controller {
         
         $this->load->helper('form');        
         $this->load->helper('url_helper');
-        //$this->load->model('Laboratorio_Model');
+        $this->load->model('Paquetes_Model');
     }
 
     public function Load_CatalogoCalendario()
@@ -31,7 +31,11 @@ class Calendario_Controller extends CI_Controller {
         $this->load->view('templates/FooterContainer');
     }
     
-    
+    public function ConsultarTodosPaquetes(){
+
+        echo json_encode($this->Paquetes_Model->ConsultarTodosPaquetes());
+
+    }
     
     //put your code here
 }
