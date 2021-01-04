@@ -1,10 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // libreria actualizada con un error en el servidor
-// require_once __DIR__ . '/vendor/autoload.php';
- require_once __DIR__ . '/vendor-mpdf-v3/autoload.php';
+// require_once __DIR__ . '/vendor-mpdf-v3/autoload.php';
 
-// require_once __DIR__ . '/vendor-mpdf/autoload.php';
+require_once __DIR__ . '/vendor-mpdf/autoload.php';
 
 class M_pdf {
 
