@@ -81,6 +81,10 @@ $route['Servicio_Cliente/ConsultarOrden']='Servicio_Controller/Load_ConsultarOrd
 
 $route['Servicio/CalibracionMantenimiento']='Servicio_Controller/Load_CalibracionMantenimiento';
 
+
+$route['Servicio/PDF/(.+)']='Servicio_Controller/Load_PDF/$1';
+$route['Servicio/PDFPaquete/(.+)']='Servicio_Controller/Load_PDFLaboratorio/$1';
+
 //PAQUETES
 $route['Paquetes/ConsultarPaquetesAbiertos']='Paquetes_Controller/Load_ConsultarPaquetesAbiertos';
 $route['Paquete/ConsultarDetalle/(.+)']='Paquetes_Controller/Load_ConsultarDetallePaquete/$1';

@@ -759,7 +759,7 @@
             icon: "success",
         });
         //alert("La orden de servicio ha sido creada");
-        window.open("<?php echo site_url();?>/Servicio/NuevaOrdenPDF/"+idOrden);
+        window.open("<?php echo site_url();?>/Servicio/PDF/"+idOrden);
     }
 
     function remover()

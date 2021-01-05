@@ -720,4 +720,43 @@ public function ConsultarDatosMantCalib()
 
         echo $result;
     }
+
+
+    public function Load_PDF($IdOrden)
+    {
+        $data['title'] = 'Ordenes';
+
+        $data['Orden'] = $IdOrden;
+
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Servicio/CardPDFOrden',$data);
+        $this->load->view('templates/FormFooter',$data);
+        $this->load->view('templates/FooterContainer');
+
+    }
+
+    public function PDFMODEL(){
+        $IdOrden = $this->input->post('IdOrden');
+        echo $pdf = $this->PDF_Model->GenerarPDFModel($IdOrden);
+    }
+
+    public function Load_PDFLaboratorio($Id)
+    {
+        $data['title'] = 'Paquete';
+
+        $data['paquete'] = $Id;
+
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Servicio/CardPDFLaboratorio',$data);
+        $this->load->view('templates/FormFooter',$data);
+        $this->load->view('templates/FooterContainer');
+
+    }
+
+    public function PDFLaboratoripMODEL(){
+        $ID = $this->input->post('id');
+        echo $pdf = $this->PDF_Model->GenerarPDFLaboratorioMODEL($ID);
+    }
 }
