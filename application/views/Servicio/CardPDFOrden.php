@@ -22,7 +22,7 @@
                         <!--FORM BODY-->
                         <div id="form-body" class="form-body">
                             
-                            <div id="PDF" onclick="imprimir()">
+                            <div id="PDF">
                             
                             </div>
 
@@ -30,7 +30,11 @@
 
 
                         </div>
-
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action" onclick="window.open('<?=site_url('Servicio/NuevaOrdenPDF/')?><?=$Orden[0][0]?>')">
+                                <i class="icon-printer"></i> Imprimir
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,6 +56,6 @@ $(document).ready(function(){
 });
 
 function imprimir(){
-    
+
 }
 </script>

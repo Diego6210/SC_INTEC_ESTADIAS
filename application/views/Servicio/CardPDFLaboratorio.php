@@ -22,7 +22,7 @@
                         <!--FORM BODY-->
                         <div id="form-body" class="form-body">
                             
-                            <div id="PDF" onclick="imprimir()">
+                        <div id="PDF">
                             
                             </div>
 
@@ -30,7 +30,11 @@
 
 
                         </div>
-
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action"  onclick="window.open('<?=site_url('Servicio/PaquetePDF/')?><?=$paquete[0][0]?>')">
+                                <i class="icon-printer"></i> Imprimir
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,10 +52,17 @@ $(document).ready(function(){
         {
             $('#PDF').html(data);
         }
-      });
+    });
 });
 
 function imprimir(){
-    
+    $.ajax({
+        url:"<?php echo site_url();?>/Servicio/PaquetePDF/<?=$paquete[0][0]?>",
+        method:"POST",
+        success: function(data)
+        {
+            
+        }
+    });
 }
 </script>

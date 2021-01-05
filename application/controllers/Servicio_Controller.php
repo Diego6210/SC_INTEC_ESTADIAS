@@ -282,7 +282,7 @@ class Servicio_Controller extends CI_Controller {
         $pdfFilePath = "reporte_".$hoy.".pdf";
 
         $this->m_pdf->pdf->WriteHTML($pdf);
-        $this->m_pdf->pdf->Output($pdfFilePath, "I");
+        $this->m_pdf->pdf->Output($pdfFilePath, "D");
 
     }
 /* ------------------------------------------------CardConsultaOrdenesServicio--------------------------------------------------------- */
@@ -661,7 +661,7 @@ public function ConsultarDatosMantCalib()
         $pdfFilePath = "reporte_".$hoy.".pdf";
 
         $this->m_pdf->pdf->WriteHTML($pdf);
-        $this->m_pdf->pdf->Output($pdfFilePath, "I");
+        $this->m_pdf->pdf->Output($pdfFilePath, "D");
 
     }
 

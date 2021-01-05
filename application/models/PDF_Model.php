@@ -643,7 +643,8 @@ class PDF_Model extends CI_Model {
               
                 </table> 
                 <br>
-                <table>
+                <div class="table-responsive"> 
+                <table class="table">
                 <thead>
                   <tr>
                     <th>Partida</th>
@@ -679,6 +680,7 @@ class PDF_Model extends CI_Model {
                   
                 </tbody>
               </table>
+              </div>
               <br>
               <table >
                   <thead>
@@ -871,8 +873,8 @@ class PDF_Model extends CI_Model {
                           </tbody>
                         </table>
                         <br>
-      
-                        <table>
+                        <div class="table-responsive"> 
+                        <table class="table">
                           <thead>
                             <tr>
                               <th>No. Orden</th>
@@ -886,7 +888,7 @@ class PDF_Model extends CI_Model {
                               <th>Divicion Minima</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody>                        
                         ';
                         $count++;
                       }
@@ -911,6 +913,8 @@ class PDF_Model extends CI_Model {
                 }
             $table3 ='</tbody>
               </table>
+              </div>
+
               <br>
               <table >
                 <thead>
