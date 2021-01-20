@@ -155,5 +155,16 @@ class Paquetes_Model extends CI_Model {
 
       return $query->row();
     }
+
+    public function ConsultarFechaPaquetes()
+    {
+        $this->db->select('IdPaqueteEnvio,FechaEnv,Descripcion,FechaRecLab');
+        $this->db->from($this->table);
+        $this->db->where('FechaEnv IS NOT NULL');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     //put your code here
 }

@@ -208,5 +208,14 @@ class OrdenServicio_Model extends CI_Model {
 
         return $query->row();
     }
+
+    public function ConsutarFechasOrdenes()
+    {
+        $this->db->select('IdOrden, Fecha as FechaOrden, Observaciones as ObservacionesOrden');
+        $this->db->from($this->table);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 //put your code here
 }

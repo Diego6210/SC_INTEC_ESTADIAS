@@ -61,48 +61,83 @@
 
 <script type="text/javascript">
 
-	var Events = {
-	"monthly": [
-		{
-		"id": 1,
-		"name": "Evento 1",
-		"startdate": "2020-12-15",
-		"enddate": "2020-12-15",
-		"starttime": "12:00",
-		"endtime": "2:00",
-		"color": "#99CCCC",	
-		"url": ""
-		}
-	]
-	};
+	/*var Events = {
+        "monthly": [
+            {
+            "id": 1,
+            "name": "Evento 1",
+            "startdate": "2020-12-15",
+            "enddate": "2020-12-15",
+            "starttime": "12:00",
+            "endtime": "2:00",
+            "color": "#99CCCC",	
+            "url": ""
+            }
+        ]
+    };
+    */
+    var dataOrden = [];
+    var dataTotal = [];
 
 	$(window).load( function() {
 
-       /* $.ajax
+        $.ajax
         ({
             type:'post',
-            url:'<?php echo site_url();?>/Calendario_Controller/ConsultarTodosPaquetes',
+            url:'<?php echo site_url();?>/Calendario_Controller/ConsutarFechasOrdenes',
             success:function(resp)
             {
-                
-
-
-                select IdOrden, Fecha, FechaEnvio,FechaRecibo,Observaciones from orden_servicio where IdOrden = 1;
-
-
-select * from equipo_orden where IdEquipoOrden = 1; 
-
-
-select * from paquete_envio where IdPaqueteEnvio = 1;
-
-
-
-
-                console.log(resp);
-                alert('Descripción: ' + resp['Descripcion']+ ' - Numero de guia: ' + resp['NumeroGuia'] + ' - Laboratorio ' + resp[0]['Descripcion_lab']);
+                let fechas = JSON.parse(resp);
+                for(let i = 0; i < fechas.length; i++){
+                    
+                    dataTotal.push(
+                        {
+                            "id": 0+fechas[i].IdOrden,
+                            "name": fechas[i].IdOrden + ' - ' + fechas[i].ObservacionesOrden,
+                            "startdate": fechas[i].FechaOrden,
+                            "enddate": fechas[i].FechaOrden,
+                            "starttime": "7:00",
+                            "endtime": "7:00",
+                            "color": "#99CCCC",	
+                            "url": ""
+                        }
+                    );
+                }
             }
-        });*/
+        });
 
+
+        $.ajax
+        ({
+            type:'post',
+            url:'<?php echo site_url();?>/Calendario_Controller/ConsultarFechaPaquetes',
+            success:function(resp)
+            {
+
+                let fechas = JSON.parse(resp);
+                for(let i = 0; i < fechas.length; i++){
+                    
+                    dataTotal.push(
+                        {
+                            "id": '00'+fechas[i].IdPaqueteEnvio,
+                            "name": fechas[i].IdPaqueteEnvio + ' - ' + fechas[i].Descripcion,
+                            "startdate": fechas[i].FechaEnv,
+                            "enddate": fechas[i].FechaRecLab,
+                            "starttime": "7:00",
+                            "endtime": "7:00",
+                            "color": "#3F51B5",	
+                            "url": ""
+                        }
+                    );
+                }
+            }
+        });
+
+
+        var Events = [];       
+
+        Events.push({"monthly": dataTotal})
+        console.log(Events);
 
 		$('#mycalendar').monthly({
 			mode: 'event',

@@ -92,6 +92,7 @@ $route['Paquete/ConsultarDetalle/(.+)']='Paquetes_Controller/Load_ConsultarDetal
 
 //Calendario
 $route['Calendario']='Calendario_Controller/Load_CatalogoCalendario';
+$route['Process']='Calendario_Controller/Load_Process';
 
 
 //Automatizacion

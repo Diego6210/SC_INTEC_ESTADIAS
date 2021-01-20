@@ -18,6 +18,7 @@ class Calendario_Controller extends CI_Controller {
         
         $this->load->helper('form');        
         $this->load->helper('url_helper');
+        $this->load->model('OrdenServicio_Model');
         $this->load->model('Paquetes_Model');
     }
 
@@ -31,10 +32,25 @@ class Calendario_Controller extends CI_Controller {
         $this->load->view('templates/FooterContainer');
     }
     
-    public function ConsultarTodosPaquetes(){
+    public function Load_Process()
+    {
+        $data['title'] = 'Procesos';
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Task/CardProcess');
+        $this->load->view('templates/FormFooter',$data); 
+        $this->load->view('templates/FooterContainer');
+    }
 
-        echo json_encode($this->Paquetes_Model->ConsultarTodosPaquetes());
+    public function ConsultarFechaPaquetes(){
+        $Data = $this->Paquetes_Model->ConsultarFechaPaquetes();
+        echo json_encode($Data);
+    }
 
+    public function ConsutarFechasOrdenes()
+    {
+        $Data = $this->OrdenServicio_Model->ConsutarFechasOrdenes();
+        echo json_encode($Data);
     }
     
     //put your code here
