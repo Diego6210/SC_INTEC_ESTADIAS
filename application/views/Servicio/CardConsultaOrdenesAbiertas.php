@@ -117,8 +117,7 @@
                                                 <th>Modelo</th>
                                                 <th>Clave</th>
                                                 <th>Num. Serie</th>
-
-                                                <th>Seleccionar</th>
+                                                <th><input name="select_all" value="1" id="example-select-all" type="checkbox"></th>
                                             </thead>
                                             <tbody>
 
@@ -310,7 +309,6 @@
                 icon: "error",
             });
         }
-        //alert("La orden no se puede eliminar");
     }
 
     function CargarEquiposOrden()
@@ -333,12 +331,22 @@
 
         "columnDefs":[
                 {
-                    "targets":7, "data":"IdEquipoOrden", "render": function(data,type,row,meta)
-                    {
-                        return '<input type="checkbox" name="chkEquipoPaquete[]" id="Seleccionar" value ="'+data+'" checked>';
+                    'targets': 7,
+                    'searchable': false,
+                    'orderable': false,
+                    "data":"IdEquipoOrden",
+                    'className': 'dt-body-center',
+                    'render': function (data, type, full, meta){
+                        return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
                     }
-                }],
 
+
+
+                }],
+        'order': [[1, 'asc']],
+        'select': {
+            'style': 'multi'
+        },
         "columns": [
                 {"data":"IdOrden"},
                 {"data":"NombreCompania"},
@@ -348,6 +356,20 @@
                 {"data":"ClaveId"},
                 {"data":"NumService"}
             ]
+        });
+
+        $('#example-select-all').on('click', function(){
+            var rows = t.rows({ 'search': 'applied' }).nodes();
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+
+        $('#tblEquiposOrdenPaquete tbody').on('change', 'input[type="checkbox"]', function(){
+            if(!this.checked){
+                var el = $('#example-select-all').get(0);
+                if(el && el.checked && ('indeterminate' in el)){
+                    el.indeterminate = true;
+                }
+            }
         });
     }
 </script>

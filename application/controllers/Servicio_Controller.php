@@ -375,7 +375,7 @@ public function ConsultarDatosMantCalib()
 
                   $IdNuevoPaquete = $this->Paquetes_Model->CrearNuevoPaquete($NuevoPaquete);
 
-                  $EquiposSeleccionados = $this->input->post('chkEquipoPaquete');
+                  $EquiposSeleccionados = $this->input->post('id');
 
                   for ($i=0;$i<sizeof($EquiposSeleccionados);$i++)
                   {

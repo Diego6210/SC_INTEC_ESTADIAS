@@ -121,7 +121,7 @@
                               <br>
                               <button id="botao-iniciar" type="submit">Iniciar</button>
                               <button id="botao-parar" type="submit">Detener</button>
-                              <button  type="submit">Registrar</button>
+                              <button id="registro"  type="submit">Registrar</button>
                               <button id="botao-apagar" type="submit">Finalizar</button>
                             </center>
 
@@ -295,6 +295,8 @@ button:hover{
   //setInterval('digiClock()', 1000);
   setInterval('digiClockFinal()', 1000);  
 
+  var inicio = false;
+
   // declarar variável horas e atribuir ligação ao tempo definido em html 
   var horas = 00; 
 
@@ -334,9 +336,15 @@ button:hover{
   var intervalo;
 
 
+  var btnregistro = document.getElementById('registro');
 
+
+  var inicioConteoFecha = "";
+  var inicioConteoHora = "";
   // após se clicar no botão iniciar
   botaoIniciar.onclick = function() {         
+
+    inicio = true;
 
     // atribuir ligação entre a duração da contagem e o intervalo em milissegundos. 1 segundo é igual a 1000 milissegundos 
     intervalo = setInterval(duracaoContagem, 10);
@@ -355,8 +363,8 @@ button:hover{
     if(mes<10)
         mes='0'+mes
 
-    let fecha = ano+"-"+mes+"-"+dia;
-    let hora = h + ':' + m + ':' + s;
+    inicioConteoFecha = ano+"-"+mes+"-"+dia;
+    inicioConteoHora = h + ':' + m + ':' + s;
     
   }
 
@@ -364,10 +372,67 @@ button:hover{
     clearInterval(intervalo);
 
 
+  btnregistro.onclick = function() {
+
+    if(inicio){
+      inicio = false
+      let tiempo = document.getElementById("horas").innerHTML + ':' + document.getElementById("minutos").innerHTML + ':' +  document.getElementById("segundos").innerHTML + ':' + document.getElementById("milissegundos").innerHTML;
+  
+  
+      $("#tabla").append(
+        '<tr>'+
+        '<td>'+inicioConteoFecha+'</td>'+
+        '<td>'+inicioConteoHora+'</td>'+
+        '<td>'+tiempo+'</td>'+
+        '</tr>'
+      );
+      clearInterval(intervalo);
+
+      // atribuir ligação entre horas e o tempo definido em html 
+      horas = "00"; 
+
+      // atribuir ligação entre minutos e o tempo definido em html  
+      minutos = "00";
+
+      // atribuir ligação entre segundos e o tempo definido em html
+      segundos = "00";
+
+      // atribuir ligação entre milissegundos e o tempo definido em html  
+      milissegundos = "00";
+
+
+      // aparecer no ecrã horas, minutos, segundos e milissegundos a zero   
+      anexarHoras.innerHTML = horas; 
+      anexarMinutos.innerHTML = minutos; 
+      anexarSegundos.innerHTML = segundos; 
+      anexarMilissegundos.innerHTML = milissegundos;
+    }
+
+  }
+
+  function registro(){
+    if(inicio){
+      inicio = false;
+      if(inicioConteoHora != ""){
+        let tiempo = document.getElementById("horas").innerHTML + ':' + document.getElementById("minutos").innerHTML + ':' +  document.getElementById("segundos").innerHTML + ':' + document.getElementById("milissegundos").innerHTML;
+    
+    
+        $("#tabla").append(
+          '<tr>'+
+          '<td>'+inicioConteoFecha+'</td>'+
+          '<td>'+inicioConteoHora+'</td>'+
+          '<td>'+tiempo+'</td>'+
+          '</tr>'
+        );
+      }
+    }
+  }
+
+
 
   // após se clicar no botão parar 
   botaoParar.onclick = function() {
-
+    registro();
     // limpar intervalo 
     clearInterval(intervalo);
   }
@@ -376,7 +441,7 @@ button:hover{
 
   // após se clicar no botão apagar   
   botaoApagar.onclick = function() {
-
+    registro();
     // limpar intervalo 
     clearInterval(intervalo);
 
