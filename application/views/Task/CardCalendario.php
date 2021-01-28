@@ -1,16 +1,5 @@
-<link rel="stylesheet" href="<?php echo base_url();?>app-assets/Calendario/css/monthly.css">
-<style type="text/css">
-    #mycalendar {
-        width: 80%;
-        height: 80%;
-        font-family: Calibri;
-        background-color: #f0f0f0;
-        padding: 0em 1em;
-        margin: 2em auto 0 auto;
-        max-width: 80em;
-        border: 1px solid #666;
-    }
-</style>
+<link rel="stylesheet" href="<?php echo base_url();?>app-assets/Calendario/evo-calendar/css/evo-calendar.css">
+<link rel="stylesheet" href="<?php echo base_url();?>app-assets/Calendario/evo-calendar/css/evo-calendar.midnight-blue.css">
 
 <div class="row match-height">
         <div class="col-md-12">
@@ -45,7 +34,7 @@
                             </li>
                         </ul>
 
-                        <div class="monthly" id="mycalendar"></div>
+                        <div id="calendar"></div>
 
                             
                                                                                                             
@@ -57,93 +46,78 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="<?php echo base_url();?>app-assets/Calendario/js/monthly.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>app-assets/Calendario/evo-calendar/js/evo-calendar.js"></script>
 
-<script type="text/javascript">
+<script>
+$(document).ready(function()
+{
 
-	/*var Events = {
-        "monthly": [
-            {
-            "id": 1,
-            "name": "Evento 1",
-            "startdate": "2020-12-15",
-            "enddate": "2020-12-15",
-            "starttime": "12:00",
-            "endtime": "2:00",
-            "color": "#99CCCC",	
-            "url": ""
+    var Events = [];
+    $.ajax
+    ({
+        type:'post',
+        url:'<?php echo site_url();?>/Calendario_Controller/ConsutarFechasOrdenes',
+        success:function(resp)
+        {
+            let fechas = JSON.parse(resp);
+            for(let i = 0; i < fechas.length; i++){
+                
+                
+                let id = 0+fechas[i].IdOrden;
+                let name = 'N. Orden: ' + fechas[i].IdOrden; 
+                let description = fechas[i].ObservacionesOrden;
+                let date = fechas[i].FechaOrden;
+                let color = "#99CCCC";
+                asignarFecha(id,name,date,color,description);
             }
-        ]
-    };
-    */
-    var dataOrden = [];
-    var dataTotal = [];
+        }
+    });
 
-	$(window).load( function() {
 
-        $.ajax
-        ({
-            type:'post',
-            url:'<?php echo site_url();?>/Calendario_Controller/ConsutarFechasOrdenes',
-            success:function(resp)
-            {
-                let fechas = JSON.parse(resp);
-                for(let i = 0; i < fechas.length; i++){
-                    
-                    dataTotal.push(
-                        {
-                            "id": 0+fechas[i].IdOrden,
-                            "name": fechas[i].IdOrden + ' - ' + fechas[i].ObservacionesOrden,
-                            "startdate": fechas[i].FechaOrden,
-                            "enddate": fechas[i].FechaOrden,
-                            "starttime": "7:00",
-                            "endtime": "7:00",
-                            "color": "#99CCCC",	
-                            "url": ""
-                        }
-                    );
-                }
+    $.ajax
+    ({
+        type:'post',
+        url:'<?php echo site_url();?>/Calendario_Controller/ConsultarFechaPaquetes',
+        success:function(resp)
+        {
+
+            let fechas = JSON.parse(resp);
+            for(let i = 0; i < fechas.length; i++){
+                
+                
+                let id = '00'+fechas[i].IdPaqueteEnvio;
+                let name = 'N. Paquete: ' + fechas[i].IdPaqueteEnvio; 
+                let description = fechas[i].Descripcion;
+                let date = fechas[i].FechaEnv;
+                let color = "#3F51B5";
+                asignarFecha(id,name,date,color,description);
+
             }
-        });
+        }
+    });
+    
+
+    $('#calendar').evoCalendar({
+        language:'es',
+        format:'yyyy/mm/dd',
+        eventHeaderFormat:'d MM, yyyy',
+        todayHighlight:true,
+        sidebarDisplayDefault: false,
+        theme: 'Midnight Blue'
+    }) ;    
+});
 
 
-        $.ajax
-        ({
-            type:'post',
-            url:'<?php echo site_url();?>/Calendario_Controller/ConsultarFechaPaquetes',
-            success:function(resp)
-            {
 
-                let fechas = JSON.parse(resp);
-                for(let i = 0; i < fechas.length; i++){
-                    
-                    dataTotal.push(
-                        {
-                            "id": '00'+fechas[i].IdPaqueteEnvio,
-                            "name": fechas[i].IdPaqueteEnvio + ' - ' + fechas[i].Descripcion,
-                            "startdate": fechas[i].FechaEnv,
-                            "enddate": fechas[i].FechaRecLab,
-                            "starttime": "7:00",
-                            "endtime": "7:00",
-                            "color": "#3F51B5",	
-                            "url": ""
-                        }
-                    );
-                }
-            }
-        });
-
-
-        var Events = [];       
-
-        Events.push({"monthly": dataTotal})
-        console.log(Events);
-
-		$('#mycalendar').monthly({
-			mode: 'event',
-			dataType: 'json',
-			events: Events
-		});
-	});
+function asignarFecha(idC,nameC,dateC,colorC,descriptionC){
+    $("#calendar").evoCalendar('addCalendarEvent', [
+    {
+      id: idC,
+      name: nameC,
+      description: descriptionC,
+      date: dateC,
+      color: colorC,
+      type: "event",
+    }]);
+}
 </script>
-

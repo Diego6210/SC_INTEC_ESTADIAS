@@ -65,7 +65,7 @@
                                     </tbody>
                                 </table>
 
-                            <?php echo form_open('Servicio_Controller/CrearNuevoPaquete');?>
+                            <!--<?php echo form_open('Servicio_Controller/CrearNuevoPaquete');?>-->
                             <div class="modal fade" id="modalNuevoPaquete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                               <div class="modal-dialog modal-lg" role="document">
                                   <div class="modal-content">
@@ -130,14 +130,14 @@
                                             <i class="icon-cross2"></i>Cerrar
                                         </button>
 
-                                        <button type="submit" class="btn btn-success mr-1" name="action" value="CrearPaquete" >
+                                        <button type="submit" class="btn btn-success mr-1" id="modalPaqueteAceptar" name="action" value="CrearPaquete" >
                                             <i class="icon-edit"></i>Crear Paquete
                                         </button>
                                     </div>
                                   </div>
                               </div>
                             </div>
-                        </form>
+                        <!--</form>-->
 
                         </div>
 
@@ -157,6 +157,61 @@
     $(document).ready(function()
     {
         CargarOrdenes(0);
+        $('#modalPaqueteAceptar').click(function() {
+            let table = $('#tblEquiposOrdenPaquete').DataTable();
+            
+            let arr= [];
+            let checkedvalues = table.$('input:checked').each(function () {
+                arr.push($(this).val())
+            });
+            
+            var DescripcionServicio = $("#DescripcionServicio").val();
+            var laboratorio = $("#laboratorio").val();
+
+            if(arr.length == 0){
+                swal({
+                    title: "Seleccione algun equipo",
+                    icon: "info",
+                });
+            }
+            else if(DescripcionServicio == ''){
+                swal({
+                    title: "Complete todos los campos",
+                    icon: "info",
+                });
+            }
+            else if(laboratorio == 0 || laboratorio == ''){
+                swal({
+                    title: "Seleccione un laboratorio",
+                    icon: "info",
+                });
+            }else if(laboratorio != 0 && arr.length != 0 && DescripcionServicio != ''){
+
+                datos={"DescripcionServicio":DescripcionServicio,"laboratorio":laboratorio,"idEquipos":JSON.stringify(arr)};
+                
+                $.ajax
+                ({
+                    type:'post',
+                    url:'<?php echo site_url();?>/Servicio_Controller/CrearNuevoPaquete',
+                    data:datos,
+                    success:function(resp)
+                    {
+                        if(resp != 'mal'){
+                            swal({
+                                title: "El paquete ha sido creado",
+                                icon: "success",
+                            });
+                            $('#modalNuevoPaquete').modal('hide');
+                        }else{
+                            swal({
+                                title: "El paquete no se ha podido crear",
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }              
+        });
     });
 
 
