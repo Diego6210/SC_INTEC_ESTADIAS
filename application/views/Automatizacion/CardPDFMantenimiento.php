@@ -3,7 +3,7 @@
             <div class="card">
                 <!--CARD HEADER-->
                 <div class="card-header">
-                    <h4 class="card-title" id="basic-layout-form">Orden <?php echo $this->uri->segment(3);?></h4>
+                    <h4 class="card-title" id="basic-layout-form">Mantenimiento: <?php echo $this->uri->segment(3);?></h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -31,7 +31,7 @@
 
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action" onclick="window.open('<?=site_url('Servicio/NuevaOrdenPDF/')?><?php echo $this->uri->segment(3);?>')">
+                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action" onclick="window.open('<?=site_url('Automatizacion/PDF/')?><?php echo $this->uri->segment(3);?>')">
                                 <i class="icon-printer"></i> Imprimir
                             </button>
                         </div>
@@ -43,9 +43,9 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    datos = {"IdOrden":<?php echo $this->uri->segment(3);?>};
+    datos = {"id":<?php echo $this->uri->segment(3);?>};
     $.ajax({
-        url:"<?php echo site_url();?>/Servicio_Controller/PDFMODEL",
+        url:"<?php echo site_url();?>/Automatizacio_Controller/PDFMantenimientoMODEL",
         data:datos,
         method:"POST",
         success: function(data)
@@ -65,3 +65,4 @@ function imprimir(){
     $('#text').html(enteredtext);
 }
 </script>
+

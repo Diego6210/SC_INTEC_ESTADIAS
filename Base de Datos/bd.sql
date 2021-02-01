@@ -409,6 +409,37 @@ INSERT INTO `usuarios` VALUES (1,'David','Parrito','david.parrito','f182bb4f7003
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+
+
+CREATE TABLE `servicio` (
+  `IdServicio` int NOT NULL AUTO_INCREMENT,
+  `IdCliente` int NOT NULL,
+  `Fecha` date DEFAULT NULL,
+  `Recoge` text DEFAULT NULL,
+  `Prioridad` TINYINT DEFAULT 0,
+  `Requerimiento` text DEFAULT NULL,
+  `RazonSocial` text DEFAULT NULL,
+  PRIMARY KEY (`IdServicio`),
+  FOREIGN KEY (`IdCliente`) REFERENCES `cliente` (`IdCliente`)
+);
+
+CREATE TABLE `equipo_servicio` (
+  `IdServicioEquipo` int NOT NULL AUTO_INCREMENT,
+  `IdServicio` int NOT NULL,
+  `IdEquipo` int NOT NULL,
+  `FechaIni` date DEFAULT NULL,
+  `FechaOut` date DEFAULT NULL,
+  `Dano` text NOT NULL,
+  `Ns` text NOT NULL,
+  `Completo` TINYINT NOT NULL,
+  `Observaciones` text NOT NULL,
+  `Insumo` text NOT NULL,
+  `Completo` TINYINT NOT NULL,
+  PRIMARY KEY (`IdServicioEquipo`),
+  FOREIGN KEY (`IdEquipo`) REFERENCES `equipo` (`IdEquipo`),
+  FOREIGN KEY (`IdServicio`) REFERENCES `servicio` (`IdServicio`)
+);
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

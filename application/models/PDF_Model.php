@@ -18,6 +18,7 @@ class PDF_Model extends CI_Model {
         $this->load->model('OrdenServicio_Model');
         $this->load->model('EquipoOrden_Model');
         $this->load->model('Paquetes_Model');
+        $this->load->model('Servicio_Model');
     }
     
     public function GenerarPDF($IdOrden)
@@ -29,6 +30,7 @@ class PDF_Model extends CI_Model {
         
         $i = 1;
       $table2 = '';
+      $table = '';
         $head = '
         <!DOCTYPE html>
         <html lang="es">
@@ -128,7 +130,7 @@ class PDF_Model extends CI_Model {
 
             foreach($Clientes as $cliente)
             {
-              $table = '
+              $table .= '
                 <table>
                   <thead>
                     <tr>
@@ -259,6 +261,7 @@ class PDF_Model extends CI_Model {
         $cliente1 = '';
         $clienteLast = '';
         $table2 = '';
+        $table = '';
         $head = '
         <!DOCTYPE html>
         <html lang="es">
@@ -357,7 +360,7 @@ class PDF_Model extends CI_Model {
 
             foreach($Laboratorio as $laboratorio)
             {
-              $table = '
+              $table .= '
                 <table>
                   <thead>
                     <tr>
@@ -528,6 +531,8 @@ class PDF_Model extends CI_Model {
         
         $i = 1;
       $table2 = '';
+      $table = '';
+
         $head = '
           <style>
         
@@ -596,7 +601,7 @@ class PDF_Model extends CI_Model {
 
             foreach($Clientes as $cliente)
             {
-              $table = '
+              $table .= '
                 <table>
                   <thead>
                     <tr>
@@ -728,6 +733,7 @@ class PDF_Model extends CI_Model {
         $cliente1 = '';
         $clienteLast = '';
         $table2 = '';
+        $table = '';
         $head = '
         <style>
         
@@ -793,7 +799,7 @@ class PDF_Model extends CI_Model {
 
             foreach($Laboratorio as $laboratorio)
             {
-              $table = '
+              $table .= '
                 <table>
                   <thead>
                     <tr>
@@ -953,5 +959,1030 @@ class PDF_Model extends CI_Model {
         return $pdf;
     }
 
+
+
+    public function GenerarPDFMantenimientoModel($Id)
+    {                
+        $ServicioInfo = $this->Servicio_Model->ConsultarServicioId($Id); 
+        //$Clientes = $this->OrdenServicio_Model->ConsultarOrdenCliente($id);
+        
+        $i = 1;
+      $table2 = '';
+      $table = '';
+
+        $head = '
+          <style>
+        
+              a {
+                text-decoration: none;
+              }
+        
+             
+              header {
+                padding: 5px 0;
+                margin-bottom: 0px;
+              }
+        
+              h2 {
+                text-align: center;
+              }        
+        
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 10px;
+              }
+        
+              table th,
+              table td {
+                text-align: center;
+                border: 0; 
+                border-bottom:0px solid #000
+              }
+        
+              table th {
+                color: #5D6975;
+                border-bottom: 1px solid #C1CED9;
+                font-weight: normal;
+                padding: 5px;
+              }
+        
+              figure{
+        
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-left: 20px;
+                margin-bottom: 0px;
+        
+              }
+        
+              table td {
+                padding: 5px;
+                text-align: left;
+              }
+        
+              
+            
+            </style>
+            ';
+
+            foreach($ServicioInfo as $servicio)
+            {
+              $table .= '
+              <div class="table-responsive"> 
+              <table class="table" cellspacing="0">
+              <thead>
+                <tr>
+                  <th style="background: #F5F5F5;" colspan="6">DATOS DEL CLIENTE</th> 
+                <tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td  style="background: #FFFFFF;width: 100px;" colspan="1" rowspan="3">
+                    <figure>
+                      <img class="logo" src="'.base_url().'app-assets/images/logo/IntecLogoV.png" style="width: 70px" align="left">
+                    </figure>
+                  </td>
+                  <td style="background: #FFFFFF;text-align: left;width:100px" colspan="1">Razón social:</td>
+                  <td style="background: #FFFFFF;border-bottom: 1px solid #000;width:320px" colspan="2">'.$servicio['RazonSocial'].'</td>
+                  <td style="background: #FFFFFF;text-align: center;width:50px" colspan="1">Fecha:</td>
+                  <td style="background: #FFFFFF;border-bottom: 1px solid #000;width:80px;text-align: center;">'.$servicio['Fecha'].' </td>
+                <tr>
+                <tr>
+                  <td style="background: #FFFFFF;text-align: left" colspan="1" >Direccion:</td>
+                  <td style="background: #FFFFFF;border-bottom: 1px solid #000;" colspan="4">'.$servicio['Domicilio'].'</td>
+                <tr>
+                
+                <tr>
+                  
+                  <td style="background: #FFFFFF;text-align: center;" colspan="1">Telefono:</td>
+                  <td style="background: #FFFFFF;border-bottom: 1px solid #000;text-align: center;width: 110px" colspan="1">'.$servicio['Telefono'].'</td>
+        
+                  <td style="background: #FFFFFF;text-align: center;width: 150px" colspan="1">Correo electronico:</td>
+                  <td style="background: #FFFFFF;border-bottom: 1px solid #000;" colspan="1">'.$servicio['Correo'].'</td>
+        
+                  <td style="border:1px solid #000;background: #FFFFFF;text-align: center;font-size: xx-small;width: 300px" colspan="3" rowspan="3"><br><br>Aceptación de permiso firmada</td>
+                <tr>
+        
+                <tr>
+                  <td style="background: #FFFFFF;text-align: center;width:100px" colspan="3">Nombre y cargo a quien se entrega:</td>
+                  <td style="background: #FFFFFF;text-align: center;border-bottom: 1px solid #000;">'.$servicio['Recoge'].'</td>
+                <tr>
+        
+                <tr>
+                  <td style="background: #FFFFFF;text-align: center;width:100px" colspan="1">Priodidad:</td>
+                  <td style="background: #FFFFFF;text-align: center;padding-right: 0px;padding-left: 0px;" colspan="1" >
+                    <input type="checkbox" id="Priodidad" name="Priodidad" value="1"'; 
+                    if($servicio['Prioridad'] == 0)
+                      $table.=' checked="checked"';
+                    
+                    $table.='> Ordinario 3-5 días<br>
+                  </td>
+                  <td style="background: #FFFFFF;text-align: center;" colspan="1" >
+                    <input type="checkbox" id="Priodidad" name="Priodidad" value="2"'; 
+                    if($servicio['Prioridad'] == 1)
+                      $table.=' checked="checked"';
+                    
+                    $table.='> Urgente 1-2 días<br>
+                  </td>
+        
+                  <td style="background: #FFFFFF;text-align: right;" colspan="1">
+                    <label>Requerimientos especiales:</label><br>
+                  </td>
+        
+                  <td style="border:1px solid #000;background: #FFFFFF;text-align: center;width: 300px" colspan="3" rowspan="3">'.$servicio['Requerimiento'].'</td>
+                </tr>
+                <thead>
+                  <tr>
+                    <th style="background: #F5F5F5;" colspan="6">DATOS DEL EQUIPO</th> 
+                  <tr>
+                </thead>
+      
+              </tbody>      
+          </table>
+          </div> 
+                  ';
+            }
+            $table2 = '
+            <div class="table-responsive">    
+              <table class="table" cellspacing="0">
+              <tbody colspan="6">
+              <tr>
+                <td colspan="" >
+                  
+                  
+
+                <table><tbody>
+                  <tr>
+                    <td style="width: 50px;">
+                      Marca:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;">
+                      
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 50px;">
+                      Modelo:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;">
+                      
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 50px;">
+                      Alcance:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;">
+                      
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 70px;">
+                      Div. Min:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;">
+                      
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 50px;">
+                      N/S:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;">
+                      
+                    </td>
+                    <tr>
+                      <td style="width: 50px;">
+                        Daño:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                  </tr>
+                </tbody></table>
+
+                </td>
+                <td colspan="">
+                  
+                  <table><tbody>
+                    <tr>
+                      <td style="width: 50px;">
+                        Marca:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        Modelo:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        Alcance:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 70px;">
+                        Div. Min:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        N/S:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                      <tr>
+                        <td style="width: 50px;">
+                          Daño:
+                        </td>
+                        <td style="border-bottom: 1px solid #000;">
+                          
+                        </td>
+                      </tr>
+                    </tr>
+                  </tbody></table>
+
+                </td>
+                <td colspan="">
+                  
+                  <table><tbody>
+                    <tr>
+                      <td style="width: 50px;">
+                        Marca:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        Modelo:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        Alcance:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 70px;">
+                        Div. Min:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50px;">
+                        N/S:
+                      </td>
+                      <td style="border-bottom: 1px solid #000;">
+                        
+                      </td>
+                      <tr>
+                        <td style="width: 50px;">
+                          Daño:
+                        </td>
+                        <td style="border-bottom: 1px solid #000;">
+                          
+                        </td>
+                      </tr>
+                    </tr>
+                  </tbody></table>
+
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            
+    <table cellspacing="0" colspan="6">
+    <thead>
+      <tr>
+        <th style="background: #F5F5F5;" colspan="6">GENERALES DEL EQUIPO</th> 
+      <tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        
+        <td colspan="" >
+          <table><tbody>
+           <tr>
+             <td style="width: 50px;text-align: center;">
+              Completo?
+             </td>
+             <td>
+              <input type="checkbox" id="Completo" name="Completo" value="1">Si
+              <input type="checkbox" id="Completo" name="Completo" value="2">No
+             </td>
+           </tr>
+          </tbody></table>
+         </td>
+
+
+         <td colspan="" >
+          <table><tbody>
+           <tr>
+             <td style="width: 50px;text-align: center;">
+              Completo?
+             </td>
+             <td>
+              <input type="checkbox" id="Completo" name="Completo" value="1">Si
+              <input type="checkbox" id="Completo" name="Completo" value="2">No
+             </td>
+           </tr>
+          </tbody></table>
+         </td>
+
+
+      
+         <td colspan="" >
+          <table><tbody>
+           <tr>
+             <td style="width: 50px; text-align: center;">
+               Completo?
+             </td>
+             <td>
+              <input type="checkbox" id="Completo" name="Completo" value="1">Si
+              <input type="checkbox" id="Completo" name="Completo" value="2">No
+             </td>
+           </tr>
+          </tbody></table>
+         </td>
+         
+      </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0" colspan="6">
+    <thead>
+      <tr>
+        <th style="background: #F5F5F5;" colspan="6">Observaciones del servicio</th> 
+      <tr>
+    </thead>
+    <tbody>
+    <td colspan="" >
+    <table><tbody>
+     <tr>
+       <td style="width: 70px; text-align: left;">
+         Fecha Ini:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td>
+     </tr>
+     <tr>
+      <td style="width: 70px; text-align: left;">
+        Hora Ini:
+      </td>
+      <td style="border-bottom: 1px solid #000;"></td >
+    </tr>
+    <tr>
+      <td style="width: 75px; text-align: left;">
+        Fecha Out:
+      </td>
+      <td style="border-bottom: 1px solid #000;"></td >
+    </tr>
+    <tr>
+      <td style="width: 70px; text-align: left;">
+        Hora Ini:
+      </td>
+      <td style="border-bottom: 1px solid #000;"></td >
+    </tr>
+
+    <tr>
+      <td style="text-align: left;">
+        Observaciones:
+      </td>
+    </tr>
+    </tbody></table>
+   </td>
+
+
+   <td colspan="" >
+    <table><tbody>
+      <tr>
+        <td style="width: 70px; text-align: left;">
+          Fecha Ini:
+        </td>
+        <td style="border-bottom: 1px solid #000;"></td>
+      </tr>
+      <tr>
+       <td style="width: 70px; text-align: left;">
+         Hora Ini:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+     <tr>
+       <td style="width: 75px; text-align: left;">
+         Fecha Out:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+     <tr>
+       <td style="width: 70px; text-align: left;">
+         Hora Ini:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+
+     <td style="text-align: left;">
+       Observaciones:
+     </td>
+    </tbody></table>
+   </td>
+
+   <td colspan="" >
+    <table><tbody>
+      <tr>
+        <td style="width: 70px; text-align: left;">
+          Fecha Ini:
+        </td>
+        <td style="border-bottom: 1px solid #000;"></td>
+      </tr>
+      <tr>
+       <td style="width: 70px; text-align: left;">
+         Hora Ini:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+     <tr>
+       <td style="width: 75px; text-align: left;">
+         Fecha Out:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+     <tr>
+       <td style="width: 70px; text-align: left;">
+         Hora Ini:
+       </td>
+       <td style="border-bottom: 1px solid #000;"></td >
+     </tr>
+
+     <td style="text-align: left;">
+      Observaciones:
+     </td>
+    </tbody></table>
+   </td>
+    </tbody>
+  </table>
+
+
+
+            </div>';
+        $pdf = $head.$table.$table2;
+
+        return $pdf;
+    }
+
+
+    public function GenerarPDFMantenimiento($Id)
+    {                
+        $ServicioInfo = $this->Servicio_Model->ConsultarServicioId($Id); 
+        //$Clientes = $this->OrdenServicio_Model->ConsultarOrdenCliente($id);
+        
+        $i = 1;
+      $table2 = '';
+      $table = '';
+
+        $head = '<!DOCTYPE html>
+        <html lang="es">
+          <head>
+            <meta charset="utf-8">
+            <title>Reporte</title>
+            <link rel="shortcut icon" type="image/x-icon" href="'.base_url().'/app-assets/images/ico/IntecIco.ico">
+            <style>
+              
+              a {
+                text-decoration: none;
+              }
+        
+              
+              header {
+                padding: 5px 0;
+                margin-bottom: 0px;
+              }
+        
+              h2 {
+                text-align: center;
+              }        
+        
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 10px;
+              }
+        
+              table th,
+              table td {
+                text-align: center;
+                border: 0; 
+                border-bottom:0px solid #000
+              }
+        
+              table th {
+                color: #5D6975;
+                border-bottom: 1px solid #C1CED9;
+                font-weight: normal;
+                padding: 5px;
+              }
+        
+        
+              table td {
+                padding: 5px;
+                text-align: left;
+              }
+        
+              figure{
+                
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-left: 20px;
+                margin-bottom: 0px;
+        
+              }
+
+              body{
+                
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-left: 0px;
+                margin-bottom: 0px;
+        
+              }
+
+              *{
+                margin-top: 0cm;
+                margin-bottom: 0cm;
+                margin-left: 0cm;
+                margin-right: 0cm;
+                }
+            
+                @page {
+                  margin: 5mm;
+                  margin-header: 5mm;
+                  margin-footer: 0mm;
+              }
+            </style>
+          </head>
+          <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0">        
+        ';
+
+        foreach($ServicioInfo as $servicio)
+        {
+          $table .= '
+          <table class="table" cellspacing="0">
+          <thead>
+            <tr>
+              <th style="background: #F5F5F5;" colspan="6">DATOS DEL CLIENTE</th> 
+            <tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td  style="background: #FFFFFF;width: 100px;" colspan="1" rowspan="3">
+                <figure>
+                  <img class="logo" src="'.base_url().'app-assets/images/logo/IntecLogoV.png" style="width: 70px" align="left">
+                </figure>
+              </td>
+              <td style="background: #FFFFFF;text-align: left;font-size: 15px;width:100px" colspan="1">Razón social:</td>
+              <td style="background: #FFFFFF;border-bottom: 1px solid #000;width:320px" colspan="2">'.$servicio['RazonSocial'].'</td>
+              <td style="background: #FFFFFF;text-align: center;width:50px" colspan="1">Fecha:</td>
+              <td style="background: #FFFFFF;border-bottom: 1px solid #000;width:80px;text-align: center;">'.$servicio['Fecha'].' </td>
+            <tr>
+            <tr>
+              <td style="background: #FFFFFF;text-align: left" colspan="1" >Direccion:</td>
+              <td style="background: #FFFFFF;border-bottom: 1px solid #000;" colspan="4">'.$servicio['Domicilio'].'</td>
+            <tr>
+            
+            <tr>
+              
+              <td style="background: #FFFFFF;text-align: center;" colspan="1">Telefono:</td>
+              <td style="background: #FFFFFF;border-bottom: 1px solid #000;text-align: center;width: 110px" colspan="1">'.$servicio['Telefono'].'</td>
+    
+              <td style="background: #FFFFFF;text-align: center;width: 150px" colspan="1">Correo electronico:</td>
+              <td style="background: #FFFFFF;border-bottom: 1px solid #000;" colspan="1">'.$servicio['Correo'].'</td>
+    
+              <td style="border:1px solid #000;background: #FFFFFF;text-align: center;font-size: xx-small;width: 300px" colspan="3" rowspan="3"><br><br>Aceptación de permiso firmada</td>
+            <tr>
+    
+            <tr>
+              <td style="background: #FFFFFF;text-align: center;width:100px" colspan="3">Nombre y cargo a quien se entrega:</td>
+              <td style="background: #FFFFFF;text-align: center;border-bottom: 1px solid #000;">'.$servicio['Recoge'].'</td>
+            <tr>
+    
+            <tr>
+              <td style="background: #FFFFFF;text-align: center;width:100px" colspan="1">Priodidad:</td>
+              <td style="background: #FFFFFF;;font-size: 12px;text-align: center;padding-right: 0px;padding-left: 0px;" colspan="1" >
+                <input type="checkbox" id="Priodidad" name="Priodidad" value="1"'; 
+                if($servicio['Prioridad'] == 0)
+                  $table.='checked="checked"';
+                
+                $table.='> Ordinario 3-5 días<br>
+              </td>
+              <td style="background: #FFFFFF;text-align: center; ;font-size: 12px;" colspan="1" >
+                <input type="checkbox" id="Priodidad" name="Priodidad" value="2"'; 
+                if($servicio['Prioridad'] == 1)
+                  $table.='checked="checked"';
+                
+                $table.='> Urgente 1-2 días<br>
+              </td>
+    
+              <td style="background: #FFFFFF;text-align: right;" colspan="1">
+                <label>Requerimientos especiales:</label><br>
+              </td>
+    
+              <td style="border:1px solid #000;background: #FFFFFF;text-align: center;width: 300px" colspan="3" rowspan="3">'.$servicio['Requerimiento'].'</td>
+            </tr>
+            <thead>
+              <tr>
+                <th style="background: #F5F5F5;" colspan="6">DATOS DEL EQUIPO</th> 
+              <tr>
+            </thead>
+  
+          </tbody>      
+      </table>
+              ';
+        }
+        $table2 = '
+          <table class="table" cellspacing="0">
+          <tbody colspan="6">
+          <tr>
+            <td colspan="" >
+              
+              
+
+            <table><tbody>
+              <tr>
+                <td style="width: 50px;font-size: 10px;">
+                  Marca:
+                </td>
+                <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                  
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 50px;font-size: 10px;">
+                  Modelo:
+                </td>
+                <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                  
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 50px;font-size: 10px;">
+                  Alcance:
+                </td>
+                <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                  
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 70px;font-size: 10px;font-size: 10px;">
+                  Div. Min:
+                </td>
+                <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                  
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 50px;font-size: 10px;">
+                  N/S:
+                </td>
+                <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                  
+                </td>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Daño:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+              </tr>
+            </tbody></table>
+
+            </td>
+            <td colspan="">
+              
+              <table><tbody>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Marca:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Modelo:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Alcance:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 70px;font-size: 10px;">
+                    Div. Min:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    N/S:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                  <tr>
+                    <td style="width: 50px;font-size: 10px;">
+                      Daño:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                      
+                    </td>
+                  </tr>
+                </tr>
+              </tbody></table>
+
+            </td>
+            <td colspan="">
+              
+              <table><tbody>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Marca:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Modelo:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    Alcance:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 70px;font-size: 10px;">
+                    Div. Min:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50px;font-size: 10px;">
+                    N/S:
+                  </td>
+                  <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                    
+                  </td>
+                  <tr>
+                    <td style="width: 50px;font-size: 10px;">
+                      Daño:
+                    </td>
+                    <td style="border-bottom: 1px solid #000;font-size: 10px;">
+                      
+                    </td>
+                  </tr>
+                </tr>
+              </tbody></table>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        
+<table cellspacing="0" colspan="6">
+<thead>
+  <tr>
+    <th style="background: #F5F5F5;" colspan="6">GENERALES DEL EQUIPO</th> 
+  <tr>
+</thead>
+<tbody>
+  
+  <tr>
+    
+    <td colspan="" >
+      <table style="margin-bottom: 0px;"><tbody>
+       <tr>
+         <td style="width: 50px;text-align: center;">
+          Completo?
+         </td>
+         <td>
+          <input type="checkbox" id="Completo" name="Completo" value="1">Si
+          <input type="checkbox" id="Completo" name="Completo" value="2">No
+         </td>
+       </tr>
+      </tbody></table>
+     </td>
+
+
+     <td colspan="" >
+      <table style="margin-bottom: 0px;"><tbody>
+       <tr>
+         <td style="width: 50px;text-align: center;">
+          Completo?
+         </td>
+         <td>
+          <input type="checkbox" id="Completo" name="Completo" value="1">Si
+          <input type="checkbox" id="Completo" name="Completo" value="2">No
+         </td>
+       </tr>
+      </tbody></table>
+     </td>
+
+
+  
+     <td colspan="" >
+      <table style="margin-bottom: 0px;"><tbody>
+       <tr>
+         <td style="width: 50px; text-align: center;">
+           Completo?
+         </td>
+         <td>
+          <input type="checkbox" id="Completo" name="Completo" value="1">Si
+          <input type="checkbox" id="Completo" name="Completo" value="2">No
+         </td>
+       </tr>
+      </tbody></table>
+     </td>
+     
+  </tr>
+</tbody>
+</table>
+
+<table cellspacing="0" colspan="6">
+<thead>
+  <tr>
+    <th style="background: #F5F5F5;" colspan="6">Observaciones del servicio</th> 
+  <tr>
+</thead>
+<tbody>
+<td colspan="" >
+<table><tbody>
+ <tr>
+   <td style="width: 70px; text-align: left;font-size: 10px;">
+     Fecha Ini:
+   </td>
+   <td style="border-bottom: 1px solid #000;font-size: 10px;"></td>
+ </tr>
+ <tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 75px; text-align: left;font-size: 10px;">
+    Fecha Out:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+
+<tr>
+  <td style="text-align: left;font-size: 10px;">
+    Observaciones:
+  </td>
+</tr>
+</tbody></table>
+</td>
+
+
+
+
+<td colspan="" >
+<table><tbody>
+ <tr>
+   <td style="width: 70px; text-align: left;font-size: 10px;">
+     Fecha Ini:
+   </td>
+   <td style="border-bottom: 1px solid #000;font-size: 10px;"></td>
+ </tr>
+ <tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 75px; text-align: left;font-size: 10px;">
+    Fecha Out:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+
+<tr>
+  <td style="text-align: left;font-size: 10px;">
+    Observaciones:
+  </td>
+</tr>
+</tbody></table>
+</td>
+
+
+<td colspan="" >
+<table><tbody>
+ <tr>
+   <td style="width: 70px; text-align: left;font-size: 10px;">
+     Fecha Ini:
+   </td>
+   <td style="border-bottom: 1px solid #000;font-size: 10px;"></td>
+ </tr>
+ <tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 75px; text-align: left;font-size: 10px;">
+    Fecha Out:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+<tr>
+  <td style="width: 70px; text-align: left;font-size: 10px;">
+    Hora Ini:
+  </td>
+  <td style="border-bottom: 1px solid #000;font-size: 10px;"></td >
+</tr>
+
+<tr>
+  <td style="text-align: left;font-size: 10px;">
+    Observaciones:
+  </td>
+</tr>
+</tbody></table>
+</td>
+
+</tbody>
+</table>
+        
+        
+          </body>
+        </html>
+        ';
+        $pdf = $head.$table.$table2;
+
+        return $pdf;
+    }
     //put your code here
 }

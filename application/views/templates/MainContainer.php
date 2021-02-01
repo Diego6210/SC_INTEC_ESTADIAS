@@ -177,7 +177,7 @@
           {
             echo '<li class=" nav-item"><a href="#"><i class="fas fa-cogs"></i><span data-i18n="nav.advance_cards.main" class="menu-title">Automatización</span></a>
               <ul class="menu-content">
-                <li><a href="'.site_url('Automatizacion/Orden').'" data-i18n="nav.cards.card_statistics" class="menu-item">Crear orden</a>
+                <li><a href="'.site_url('Automatizacion/Servicios').'" data-i18n="nav.cards.card_statistics" class="menu-item">Servicios</a>
                 </li>
               </ul>
             </li>';

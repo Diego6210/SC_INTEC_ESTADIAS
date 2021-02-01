@@ -21,6 +21,9 @@ class Automatizacio_Controller extends CI_Controller {
         
         $this->load->helper('form');        
         $this->load->helper('url_helper');
+        $this->load->model('PDF_Model');
+        $this->load->model('Servicio_Model');
+
         //$this->load->model('Laboratorio_Model');
     }
 
@@ -83,6 +86,69 @@ class Automatizacio_Controller extends CI_Controller {
         if(!$uploadStatus == 1){
             echo 'Fallo al importar los datos';
         }
+    }
+
+
+    public function Load_MantenimientoPDF($idServicio)
+    {
+
+        $data['title'] = 'Servicio';
+
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Automatizacion/CardPDFMantenimiento',$data);
+        $this->load->view('templates/FormFooter',$data);
+        $this->load->view('templates/FooterContainer');
+
+
+      // code...
+    }
+
+    public function PDFMantenimientoMODEL(){
+        $ID = $this->input->post('id');
+        echo $pdf = $this->PDF_Model->GenerarPDFMantenimientoModel($ID);
+    }
+
+    public function Load_CatalogoServicio()
+    {
+
+        $data['title'] = 'Servicio';
+
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Automatizacion/CardServicios',$data);
+        $this->load->view('templates/FormFooter',$data);
+        $this->load->view('templates/FooterContainer');
+      // code...
+    }
+
+    public function CrearPDFServicio($IdOrden)
+    {
+        $this->load->library('M_pdf');
+
+        $hoy = date("dmyhis");
+
+        $style="<style>@page *{
+            margin-top: 0cm;
+            margin-bottom: 0cm;
+            margin-left: 0cm;
+            margin-right: 0cm;
+            }</style>";
+        
+
+        $pdf = $this->PDF_Model->GenerarPDFMantenimiento($IdOrden);
+
+        $pdfFilePath = "reporte_".$hoy.".pdf";
+
+        $this->m_pdf->pdf->WriteHTML($pdf);
+        $this->m_pdf->pdf->WriteHTML($style);
+        $this->m_pdf->pdf->Output($pdfFilePath, "I");
+    }
+
+
+    public function ConsultarServicios(){
+        $Data = $this->Servicio_Model->ConsultarServicio();
+        echo json_encode($Data);
     }
     //put your code here
 }

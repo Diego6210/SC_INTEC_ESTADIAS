@@ -97,6 +97,9 @@ $route['Process']='Calendario_Controller/Load_Process';
 
 //Automatizacion
 $route['Automatizacion/Orden']='Automatizacio_Controller/Load_Automatizacion';
+$route['Automatizacion/Servicios']='Automatizacio_Controller/Load_CatalogoServicio';
+$route['Automatizacion/VerPDF/(.+)']='Automatizacio_Controller/Load_MantenimientoPDF/$1';
+$route['Automatizacion/PDF/(.+)']='Automatizacio_Controller/CrearPDFServicio/$1';
 
 
 

@@ -3,7 +3,7 @@
             <div class="card">
                 <!--CARD HEADER-->
                 <div class="card-header">
-                    <h4 class="card-title" id="basic-layout-form">Paquete <?=$paquete[0][0]?></h4>
+                    <h4 class="card-title" id="basic-layout-form">Paquete <?php echo $this->uri->segment(3);?></h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -31,7 +31,7 @@
 
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action"  onclick="window.open('<?=site_url('Servicio/PaquetePDF/')?><?=$paquete[0][0]?>')">
+                            <button type="submit" class="btn btn-primary mr-1" id="imprimir" name="action"  onclick="window.open('<?=site_url('Servicio/PaquetePDF/')?><?php echo $this->uri->segment(3);?>')">
                                 <i class="icon-printer"></i> Imprimir
                             </button>
                         </div>
@@ -43,7 +43,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    datos = {"id":<?=$paquete[0][0]?>};
+    datos = {"id":<?php echo $this->uri->segment(3);?>};
     $.ajax({
         url:"<?php echo site_url();?>/Servicio_Controller/PDFLaboratoripMODEL",
         data:datos,
@@ -56,13 +56,12 @@ $(document).ready(function(){
 });
 
 function imprimir(){
-    $.ajax({
-        url:"<?php echo site_url();?>/Servicio/PaquetePDF/<?=$paquete[0][0]?>",
-        method:"POST",
-        success: function(data)
-        {
-            
-        }
-    });
+    var restorepage = $('body').html();
+    var printcontent = $('#PDF').clone();
+    var enteredtext = $('#text').val();
+    $('body').empty().html(printcontent);
+    window.print();
+    $('body').html(restorepage);
+    $('#text').html(enteredtext);
 }
 </script>
