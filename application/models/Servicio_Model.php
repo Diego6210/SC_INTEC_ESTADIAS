@@ -42,10 +42,11 @@ class Servicio_Model extends CI_Model {
         return $query->result_array();
     }
 
-    public function InsertarLaboratorio($Descripcion_lab,$Domicilio,$Telefono,$diasServicios)
+    public function InsertarServicio($idCliente,$razon,$fecha,$recoge,$prioridad,$requerimiento)
     {
-        $data = array('Descripcion_lab' => $Descripcion_lab,'Domicilio' => $Domicilio,'Telefono' => $Telefono
-        ,'diasServicios' => $diasServicios);
+        $data = array('IdCliente' => $idCliente,'RazonSocial' => $razon,'Fecha' => $fecha
+        ,'recoge' => $recoge,'Prioridad' => $prioridad,'Requerimiento' => $requerimiento);
+        
 
         $this->db->insert($this->table,$data);
 

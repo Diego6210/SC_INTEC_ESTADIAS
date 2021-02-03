@@ -23,7 +23,7 @@ class Automatizacio_Controller extends CI_Controller {
         $this->load->helper('url_helper');
         $this->load->model('PDF_Model');
         $this->load->model('Servicio_Model');
-
+        $this->load->model('Clientes_Model');
         //$this->load->model('Laboratorio_Model');
     }
 
@@ -145,6 +145,42 @@ class Automatizacio_Controller extends CI_Controller {
         $this->m_pdf->pdf->Output($pdfFilePath, "I");
     }
 
+    public function ConsultarClientes_ajax()
+    {
+        $Clientes = $this->Clientes_Model->ConsultarClientes();
+
+
+        $output ='<option value="">Seleccione un cliente</option>';
+
+        foreach ($Clientes as $cliente)
+        {
+            $output .='<option value="'.$cliente['IdCliente'].'">'.$cliente['NombreCompania'].'</option>';
+        }
+
+        echo $output;
+    }
+
+    public function ConsultarDataClientes_ajax()
+    {
+        $id = $this->input->post('id');
+
+        if($id != "")
+        {
+            $Clientes = $this->Clientes_Model->ConsultarDataClientes($id);
+
+            echo json_encode($Clientes);
+        }
+    }
+    public function CrearServicio(){
+        $idCliente = $this->input->post('idCliente');
+        $razon = $this->input->post('razon');
+        $fecha = $this->input->post('fecha');
+        $recoge = $this->input->post('recoge');
+        $prioridad = $this->input->post('prioridad');
+        $requerimiento = $this->input->post('requerimiento');
+        
+        echo $data = $this->Servicio_Model->InsertarServicio($idCliente,$razon,$fecha,$recoge,$prioridad,$requerimiento);
+    }
 
     public function ConsultarServicios(){
         $Data = $this->Servicio_Model->ConsultarServicio();
