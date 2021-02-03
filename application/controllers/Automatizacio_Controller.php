@@ -186,5 +186,8 @@ class Automatizacio_Controller extends CI_Controller {
         $Data = $this->Servicio_Model->ConsultarServicio();
         echo json_encode($Data);
     }
-    //put your code here
+
+    public function phpinfo(){
+        echo phpinfo();
+    }
 }
