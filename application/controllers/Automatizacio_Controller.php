@@ -24,7 +24,8 @@ class Automatizacio_Controller extends CI_Controller {
         $this->load->model('PDF_Model');
         $this->load->model('Servicio_Model');
         $this->load->model('Clientes_Model');
-        //$this->load->model('Laboratorio_Model');
+        $this->load->model('Equipo_Model');
+        $this->load->model('Equipo_Servicio_Model');
     }
 
     public function Load_Automatizacion()
@@ -122,6 +123,16 @@ class Automatizacio_Controller extends CI_Controller {
       // code...
     }
 
+    public function Load_Process($idServicio)
+    {
+        $data['title'] = 'Procesos';
+        $this->load->view('templates/MainContainer',$data);
+        $this->load->view('templates/HeaderContainer',$data);
+        $this->load->view('Task/CardProcess');
+        $this->load->view('templates/FormFooter',$data); 
+        $this->load->view('templates/FooterContainer');
+    }
+
     public function CrearPDFServicio($IdOrden)
     {
         $this->load->library('M_pdf');
@@ -150,11 +161,27 @@ class Automatizacio_Controller extends CI_Controller {
         $Clientes = $this->Clientes_Model->ConsultarClientes();
 
 
-        $output ='<option value="">Seleccione un cliente</option>';
+        $output ='<option value="" disabled selected>Seleccione un cliente</option>';
 
         foreach ($Clientes as $cliente)
         {
             $output .='<option value="'.$cliente['IdCliente'].'">'.$cliente['NombreCompania'].'</option>';
+        }
+
+        echo $output;
+    }
+
+    public function ConsultarDatosEquipos()
+    {
+        $IdCliente = $this->input->post('IdCliente');
+        $Equipos = $this->Equipo_Model->ConsultarEquiposbyCliente($IdCliente);
+
+
+        $output ='<option value="" disabled selected>Seleccione un Equipo</option>';
+
+        foreach ($Equipos as $equipos)
+        {
+            $output .='<option value="'.$equipos['IdEquipo'].'">'.$equipos['Descripcion'].' - '.$equipos['NumService'].' </option>';
         }
 
         echo $output;
@@ -180,6 +207,21 @@ class Automatizacio_Controller extends CI_Controller {
         $requerimiento = $this->input->post('requerimiento');
         
         echo $data = $this->Servicio_Model->InsertarServicio($idCliente,$razon,$fecha,$recoge,$prioridad,$requerimiento);
+    }
+
+    public function InsertarServicio()
+    {
+        
+        $IdServicio = $this->input->post('IdServicio');
+        $IdEquipo = $this->input->post('IdEquipo');
+        $CountEquipos = $this->Equipo_Servicio_Model->ConsultarNumEquipos($IdServicio);
+
+        if($CountEquipos->NumEquipos <3){
+
+            echo $this->Equipo_Servicio_Model->InsertarServicio($IdServicio,$IdEquipo);
+        }else{
+            echo 0;
+        }
     }
 
     public function ConsultarServicios(){

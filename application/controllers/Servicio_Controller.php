@@ -224,7 +224,7 @@ class Servicio_Controller extends CI_Controller {
     {
         $Equipo = $this->Equipo_Model->ConsultarDatosPeriodos();
 
-        $output ='<option value="">Seleccione un Periodo</option>';
+        $output ='<option value="" disabled selected>Seleccione un Periodo</option>';
 
         foreach ($Equipo as $equipo)
         {
@@ -261,7 +261,7 @@ class Servicio_Controller extends CI_Controller {
         $Clientes = $this->Clientes_Model->ConsultarClientes();
 
 
-        $output ='<option value="">Seleccione un cliente</option>';
+        $output ='<option disabled selected value="">Seleccione un cliente</option>';
 
         foreach ($Clientes as $cliente)
         {
@@ -336,7 +336,7 @@ public function ConsultarDatosMantCalib()
 
         foreach ($Laboratorios as $laboratorios)
         {
-           $output .='<option value="'.$laboratorios['IdLaboratorio'].'">'.$laboratorios['Descripcion_lab'].'</option>';
+           $output .='<option disabled selected value="'.$laboratorios['IdLaboratorio'].'">'.$laboratorios['Descripcion_lab'].'</option>';
         }
         echo $output;
     }

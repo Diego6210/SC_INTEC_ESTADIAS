@@ -238,5 +238,17 @@ class Equipo_Model extends CI_Model {
       return $result->result_array();
 
     }
+
+    public function ConsultarEquiposbyCliente($IdCliente)
+    {
+        $this->db->select('IdEquipo,Descripcion,NumService');
+        $this->db->from($this->table);
+        $this->db->where('IdCliente',$IdCliente);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
     //put your code here
 }
