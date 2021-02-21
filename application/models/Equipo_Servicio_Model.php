@@ -42,4 +42,16 @@ class Equipo_Servicio_Model extends CI_Model{
 
       return $query->result_array();
   }
+
+  public function ConsultarServicioEquipo($idServicio)
+  {
+      $this->db->select('Descripcion,NumService');
+      $this->db->from($this->table);
+      $this->db->join('equipo',$this->table.'.IdEquipo = equipo.IdEquipo');
+      $this->db->where('IdServicio',$idServicio);
+
+      $query = $this->db->get();
+
+      return $query->result_array();
+  }
 }

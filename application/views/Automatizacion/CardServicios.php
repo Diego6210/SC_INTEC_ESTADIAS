@@ -381,10 +381,7 @@
             {
                 $("#Equiposselect").html(resp.responseText);
             }
-        })
-        ;
-
-
+        });
     }
 
     function CargarServicios()

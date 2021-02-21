@@ -422,10 +422,6 @@ class PDF_Model extends CI_Model {
                             <tr>
                           </thead>
                           <tbody>
-                            <tr>
-                            <td style="width:150px">Contacto</td>
-                            <td colspan="3">'.$cliente['NombreContacto'].'</td>
-                          <tr>
                           <tr>
                             <td style="width:150px">Compañia</td>
                             <td colspan="3">'.$cliente['NombreCompania'].'</td>
@@ -434,10 +430,6 @@ class PDF_Model extends CI_Model {
                             <td style="width:150px">Domicilio del Informe</td>
                             <td colspan="3">'.$cliente['Domicilio'].'</td>
                           <tr>
-                          <tr>
-                            <td style="width:150px">Correo Contacto</td>
-                            <td colspan="3">'.$cliente['Correo'].'</td>
-                            <tr>
                           </tbody>
                         </table>
                         <br>
@@ -861,10 +853,6 @@ class PDF_Model extends CI_Model {
                             <tr>
                           </thead>
                           <tbody>
-                            <tr>
-                            <td style="width:150px">Contacto</td>
-                            <td colspan="3">'.$cliente['NombreContacto'].'</td>
-                          <tr>
                           <tr>
                             <td style="width:150px">Compañia</td>
                             <td colspan="3">'.$cliente['NombreCompania'].'</td>
@@ -873,10 +861,6 @@ class PDF_Model extends CI_Model {
                             <td style="width:150px">Domicilio del Informe</td>
                             <td colspan="3">'.$cliente['Domicilio'].'</td>
                           <tr>
-                          <tr>
-                            <td style="width:150px">Correo Contacto</td>
-                            <td colspan="3">'.$cliente['Correo'].'</td>
-                            <tr>
                           </tbody>
                         </table>
                         <br>

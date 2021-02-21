@@ -187,6 +187,22 @@ class Automatizacio_Controller extends CI_Controller {
         echo $output;
     }
 
+    public function ConsultarDatosEquiposByServicio()
+    {
+        $Id = $this->input->post('Id');
+        $Equipos = $this->Equipo_Servicio_Model->ConsultarServicioEquipo($Id);
+
+
+        $output ='<option value="" disabled selected>Seleccione un Equipo</option>';
+
+        foreach ($Equipos as $equipos)
+        {
+            $output .='<option value="'.$equipos['IdEquipo'].'">'.$equipos['Descripcion'].' - '.$equipos['NumService'].' </option>';
+        }
+
+        echo $output;
+    }
+
     public function ConsultarDataClientes_ajax()
     {
         $id = $this->input->post('id');
