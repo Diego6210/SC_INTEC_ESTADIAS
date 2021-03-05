@@ -21,12 +21,34 @@ CREATE TABLE `servicio` (
 );
 
 
+CREATE TABLE `servicio_process` (
+  `IdServicio` int NOT NULL AUTO_INCREMENT,
+  `ConteoFecha` date NOT NULL,
+  `ConteoHora` date DEFAULT NULL,
+  `tiempo` text DEFAULT NULL,
+  PRIMARY KEY (`IdServicio`),
+  FOREIGN KEY (`IdServicio`) REFERENCES `servicio` (`IdServicio`)
+);
+
+CREATE TABLE `equipo_tipo_servicio` (
+  `IdEquipoServicio` int NOT NULL AUTO_INCREMENT,
+  `IdEquipo` int NOT NULL,
+  `IdOrden` int,
+  `Servicio` int DEFAULT 0,
+  PRIMARY KEY (`IdEquipoServicio`),
+  FOREIGN KEY (`IdEquipo`) REFERENCES `equipo` (`IdEquipo`),
+  FOREIGN KEY (`IdOrden`) REFERENCES `orden_servicio` (`IdOrden`)
+);
+
+
 CREATE TABLE `equipo_servicio` (
   `IdServicioEquipo` int NOT NULL AUTO_INCREMENT,
   `IdServicio` int NOT NULL,
   `IdEquipo` int NOT NULL,
   `FechaIni` date DEFAULT NULL,
   `FechaOut` date DEFAULT NULL,
+  `HoraIni` TIME DEFAULT NULL,
+  `HoraOut` TIME DEFAULT NULL,
   `Dano` text NOT NULL,
   `Ns` text NOT NULL,
   `Completo` TINYINT NOT NULL,
@@ -37,3 +59,10 @@ CREATE TABLE `equipo_servicio` (
   FOREIGN KEY (`IdEquipo`) REFERENCES `equipo` (`IdEquipo`),
   FOREIGN KEY (`IdServicio`) REFERENCES `servicio` (`IdServicio`)
 );
+
+alter table equipo_servicio ADD COLUMN HoraOut TIME;
+alter table equipo_servicio ADD COLUMN HoraIni TIME;
+
+ALTER TABLE `equipo_servicio` CHANGE `HoraIni` `HoraIni` TIME NULL DEFAULT NULL;
+ALTER TABLE `equipo_servicio` CHANGE `HoraOut` `HoraOut` TIME NULL DEFAULT NULL;
+
