@@ -24,7 +24,7 @@ CREATE TABLE `servicio` (
 CREATE TABLE `servicio_process` (
   `IdServicio` int NOT NULL AUTO_INCREMENT,
   `ConteoFecha` date NOT NULL,
-  `ConteoHora` date DEFAULT NULL,
+  `ConteoHora` TIME DEFAULT NULL,
   `tiempo` text DEFAULT NULL,
   PRIMARY KEY (`IdServicio`),
   FOREIGN KEY (`IdServicio`) REFERENCES `servicio` (`IdServicio`)
